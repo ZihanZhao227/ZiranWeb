@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/zhaozihan/ziranweb *)",
+      "Bash(mkdir -p \"/Users/zhaozihan/ziranweb/app/shelf/[category]/[id]\")",
+      "Bash(node -e ' *)",
+      "Bash(grep -A2 \"class=\\\\\"font-heading text-5xl\" /tmp/cat_Everyday.html | head -5 *)",
+      "Read(//private/tmp/**)",
+      "Bash(curl -s -o /tmp/entry.html -w \"%{http_code}\\\\n\" \"http://localhost:3000/shelf/Everyday/3992d8c3-96ec-80ef-bc4f-e76405d02977\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/shelf/NotACategory\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/shelf/Everyday/00000000-0000-0000-0000-000000000000\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/shelf/Medley/3992d8c3-96ec-80ef-bc4f-e76405d02977\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/shelf\")"
+    ],
+    "additionalDirectories": [
+      "/Users/zhaozihan/ziranweb/app/shelf/[slug]",
+      "/Users/zhaozihan/ziranweb/app/shelf/[category]"
+    ]
+  }
+}

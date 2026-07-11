@@ -1,0 +1,30 @@
+import type { Metadata } from "next";
+import SiteHeader from "@/components/SiteHeader";
+import CategoryCover from "@/components/shelf/CategoryCover";
+import { SHELF_CATEGORIES } from "@/types/shelf";
+
+export const metadata: Metadata = {
+  title: "Everything Bagel",
+};
+
+export default function ShelfPage() {
+  return (
+    <div className="flex min-h-dvh flex-col">
+      <SiteHeader />
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-16 px-6 py-16 md:px-0 md:py-24">
+        <div className="flex flex-col gap-3">
+          <h1 className="font-heading text-5xl leading-[1.05] tracking-tight md:text-7xl">
+            Everything <span className="text-moss">Bagel</span>
+          </h1>
+          <p className="font-body text-lg italic text-ink/50">Shelf</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+          {SHELF_CATEGORIES.map((category) => (
+            <CategoryCover key={category} category={category} />
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}

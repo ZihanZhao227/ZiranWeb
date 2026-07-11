@@ -17,7 +17,7 @@ export default function ProjectCard({ project }: { project: Project }) {
               "repeating-linear-gradient(45deg, #f5c518 0 10px, #141412 10px 20px)",
           }}
         >
-          <span className="bg-ink py-1 text-center font-heading text-xs font-bold tracking-[0.2em] text-[#f5c518]">
+          <span className="bg-ink py-1 text-center font-heading text-sm font-bold tracking-[0.2em] text-[#f5c518]">
             施工中
           </span>
         </div>
