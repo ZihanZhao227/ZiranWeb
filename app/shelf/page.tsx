@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import CategoryCover from "@/components/shelf/CategoryCover";
+import FadeIn from "@/components/FadeIn";
 import { SHELF_CATEGORIES } from "@/types/shelf";
 
 export const metadata: Metadata = {
@@ -20,8 +21,10 @@ export default function ShelfPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
-          {SHELF_CATEGORIES.map((category) => (
-            <CategoryCover key={category} category={category} />
+          {SHELF_CATEGORIES.map((category, index) => (
+            <FadeIn key={category} delay={index * 0.1}>
+              <CategoryCover category={category} />
+            </FadeIn>
           ))}
         </div>
       </main>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
+import FadeIn from "@/components/FadeIn";
 
 export const metadata: Metadata = {
   title: "关于我 / Ziran",
@@ -22,16 +23,18 @@ export default function AboutPage() {
           <span className="text-moss">Zihan</span>。
         </h1>
 
-        <div className="flex flex-col gap-6 font-body text-lg leading-relaxed text-ink/80 md:text-xl">
-          <p>
-            我在这里写代码、做东西、偶尔写点什么。这个网站是我给自己搭的一个数字角落——
-            左边是「自然」的我,右边是「实验室」里的作品。
-          </p>
-          <p>
-            在这条边界背后,我关心的是把想法做成能用的东西:从一行代码开始,
-            到一个能上线、能被别人打开看看的产品。
-          </p>
-        </div>
+        <FadeIn>
+          <div className="flex flex-col gap-6 font-body text-lg leading-relaxed text-ink/80 md:text-xl">
+            <p>
+              我在这里写代码、做东西、偶尔写点什么。这个网站是我给自己搭的一个数字角落——
+              左边是「自然」的我,右边是「实验室」里的作品。
+            </p>
+            <p>
+              在这条边界背后,我关心的是把想法做成能用的东西:从一行代码开始,
+              到一个能上线、能被别人打开看看的产品。
+            </p>
+          </div>
+        </FadeIn>
 
         <div className="flex flex-col gap-4 border-t border-ink/10 pt-10">
           {LINKS.map((link) => (

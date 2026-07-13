@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import ProjectCard from "@/components/ProjectCard";
+import FadeIn from "@/components/FadeIn";
 import projects from "@/data/projects.json";
 import type { Project } from "@/types/project";
 
@@ -28,8 +29,10 @@ export default function WorkPage() {
               进行中
             </h2>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {inProgress.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+              {inProgress.map((project, index) => (
+                <FadeIn key={project.id} delay={index * 0.1}>
+                  <ProjectCard project={project} />
+                </FadeIn>
               ))}
             </div>
           </section>
@@ -41,8 +44,10 @@ export default function WorkPage() {
               已完工
             </h2>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {done.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+              {done.map((project, index) => (
+                <FadeIn key={project.id} delay={index * 0.1}>
+                  <ProjectCard project={project} />
+                </FadeIn>
               ))}
             </div>
           </section>

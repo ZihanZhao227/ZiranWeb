@@ -3,9 +3,9 @@
 :root {
   --paper: #f7f6f2;
   --ink: #141412;
-  --moss: #4a5d3a;
-  --moss-dark: #3a4a2d;
-  --moss-light: #7c9463;
+  --moss: #bce0df;
+  --moss-dark: #2c4f4d;
+  --moss-light: #d8efee;
 }
 
 @theme inline {

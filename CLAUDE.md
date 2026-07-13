@@ -1,104 +1,150 @@
-# 项目:ZiranWeb(个人网站)
+# ZiranLab 项目文档
 
-## 技术栈
-- 框架:Next.js (App Router) + TypeScript + Tailwind CSS
+## 基本信息
+- 内部名:ZiranWeb / 对外品牌:ZiranLab
+- 框架:Next.js App Router + TypeScript + Tailwind CSS
 - 部署:Vercel(GitHub push自动部署)
-- 域名:ziranweb.com(Cloudflare Registrar购买)
+- 正式域名:https://ziranlab.com
+- DNS:Cloudflare
+- 内容数据:Notion API
+- 动效:Motion / Framer Motion
+- 分析:Google Analytics 4
 
-## 整体优先级
-A(关于我)+ B(作品展示)已完成,不要再修改这两个模块的文件。当前进行:C(博客书架)骨架。
+## 环境变量(不提交GitHub)
+NOTION_API_KEY=...
+NOTION_DB_EVERYDAY=...
+NOTION_DB_INEDIBLE=...
+NOTION_DB_MEDLEY=...
+NEXT_PUBLIC_SUPPORT_ENABLED=false
+NEXT_PUBLIC_KOFI_URL=https://ko-fi.com/ziranlab
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-6V0C4PC8K0
+
+## 修改原则
+每次任务只动明确批准的文件。完成后必须跑:
+npm run lint
+npm run build
+
+并汇报新增/修改了哪些文件。不自动执行git commit/push。
+
+## 默认禁止修改
+- app/about/page.tsx 的文字内容
+- app/work/page.tsx 的文字内容
+- lib/notion.ts
+- data/projects.json 的项目描述和链接
+- components/SplitLanding.tsx
+- 任何未明确批准的文件
 
 ## 设计系统
 
-### 配色
-- 主色:苔藓绿(moss green)
-- 辅色:黑白为主
-- 入口页强调色仅用苔藓绿一种,不叠加其他彩色
+### 配色(CSS变量名保留moss,但颜色已升级为薄荷蓝)
+```css
+--moss: #BCE0DF        /* 薄荷蓝,主强调色 */
+--moss-dark: #2C4F4D   /* 深松石,文字和hover */
+--moss-light: #D8EFEE  /* 浅薄荷蓝,hover背景 */
+--paper: #F7F6F2       /* 米白背景 */
+--ink: #141412         /* 正文黑 */
+```
 
 ### 字体
 - 标题:Fraunces
 - 正文:Newsreader
+- 品牌标识:monospace
 
-### 视觉结构(两层,已实现,不要改动)
-- **入口分屏**(`components/SplitLanding.tsx`):左"Ziran"(黑底)→/about,右"Lab"(白底)→/work;hover该侧变苔藓绿,自定义鼠标(混合模式圆点+"ENTER"文字);底部苔藓绿marquee;点击后该侧展开吞没另一侧再跳转
-- **内容页**:editorial/杂志感单栏大字报布局,大字号Fraunces标题,大量留白,苔藓绿+黑白
+### SiteHeader品牌文字
+"Ziran / Lab" 改为 "ZIRANLAB",样式:
+- font-family: monospace
+- font-size: 14px
+- letter-spacing: 0.08em
+- text-transform: uppercase
 
-## 模块清单
+## 模块状态
 
-### A. 关于我 — 已完成,不要修改
-文件:`app/about/page.tsx`。邮箱已填真实地址,GitHub/LinkedIn链接为占位符待回填(回填由用户自己做,不是Claude Code任务)。
+### A. 关于我 — 核心已完成
+文件:app/about/page.tsx
+待用户自填:GitHub/LinkedIn真实链接
+允许:FadeIn、WordReveal、数字统计条
 
-### B. 作品展示 — 已完成,不要修改
-文件:`app/work/page.tsx`、`types/project.ts`、`data/projects.json`、`components/ProjectCard.tsx`。projects.json里GitHub链接为`your-username`占位符待回填(用户自己做)。进行中项目卡片贴黄黑「施工中」封条(黑底黄字中央条带样式)。
+### B. 作品展示 — 核心已完成
+文件:app/work/page.tsx、components/ProjectCard.tsx、types/project.ts、data/projects.json
+允许:FadeIn、hover动效、tags标签、videoUrl字段预留
 
-### C. 博客(书架) — 当前开发,骨架阶段
+### C. 博客书架 — 已完成并接入Notion
+总标题:Everything Bagel
+分类:Everyday / Inedible / Medley
+路由:/shelf → /shelf/[category] → /shelf/[category]/[id]
+允许:封面FadeIn、阅读页ScrollLit、文章底部Support入口
 
-**总标题:Everything Bagel**(不再使用中文名"一撮孜然"/"孜然大杂烩")
+### D. AI聊天助手 — 未开始(P1)
+等视觉/Support/GA4稳定后开始
 
-三个分类英文名:
-- Everyday(原"普通")
-- Inedible(原"不可食用")
-- Medley(原"什锦")
+### E1. 打赏预告态 — 前端未实现
+- Ko-fi URL:https://ko-fi.com/ziranlab
+- NEXT_PUBLIC_SUPPORT_ENABLED=false时:弹出Coming Soon弹窗
+- NEXT_PUBLIC_SUPPORT_ENABLED=true时:新标签页打开Ko-fi
+- 导航栏按钮文案:"支持一下 ☕"
+- 弹窗标题:"Support is coming soon"
+- 弹窗正文:"The support page is ready, but payments are not open yet. Thank you for wanting to support ZiranLab."
+- 每次点击都发GA4的support_click事件
 
-**结构层级(重要,不是"分类=书"的嵌套结构):**
-1. 书架页(`/shelf`)= 3本书封面,分别是Everyday / Inedible / Medley
-2. 点击某本书封面 → 进入该分类的**目录页**,不是另一层书架。目录页列出该分类下所有条目,格式:`01 · 标题`(序号由代码按日期排序自动生成,不存在数据里,不用维护序号字段)
-3. 点目录里的某一条 → 进入该条目的阅读页,此时才显示更新日期和正文内容
+### E2. 正式支付 — 等EAD和主体明确后开启
+把NEXT_PUBLIC_SUPPORT_ENABLED改为true重新部署即可
 
-**视觉:**
-- 书架页3本封面:CSS Grid排列
-- 点击封面 → 放大+淡入过渡进入目录页(骨架阶段用便宜方案,不做3D翻页)
-- 每本封面需自定义封面上传/更换功能,先存本地
-- 三个分类的封面视觉规格:
-  - Everyday:米白色基调
-  - Inedible:苔藓绿+棕黄+深紫混合"魔药"配色,叠加细闪流动颗粒效果(指甲油glitter质感)
-  - Medley:低饱和度彩虹渐变(不要高饱和,要调得高级),叠加较粗颗粒闪光效果,比Inedible的闪片更粗
+### F. GA4 — 平台已建,代码未接入
+Measurement ID:G-6V0C4PC8K0
+环境变量:NEXT_PUBLIC_GA_MEASUREMENT_ID
+ID缺失时网站正常运行不报错
 
-**内容数据源:Notion API(已完成Notion端配置,当前任务是接入代码)**
-- 三个分类分别对应Notion里的3个内联数据库(Everyday/Inedible/Medley),每个数据库字段:`Name`(标题)、`Date`(日期)、`Public`(勾选框,决定是否在网站上展示)
-- 每一行的正文写在该行notion页面的正文区,用Notion API的blocks接口读取渲染
-- 用Notion官方JS SDK(`@notionhq/client`),token存在`.env.local`里的`NOTION_API_KEY`,不要硬编码
-- 三个数据库的ID分别存为环境变量:`NOTION_DB_EVERYDAY`、`NOTION_DB_INEDIBLE`、`NOTION_DB_MEDLEY`
-- 拉取逻辑封装成独立的数据获取函数(比如`lib/notion.ts`),前端组件不直接调Notion SDK,方便以后维护
+### G. 商店 — P2暂不做
+### H. 多语言 — 未来功能
+### I. 评论区 — 未来功能
 
-**目录序号规则:**
-- 不在Notion里存序号字段
-- 前端拿到该分类所有条目后,按`Date`升序或降序排序(建议按时间从早到晚,序号从01开始),序号是渲染时计算出来的,不是存储的数据
+## 动效规范(全部需要检测prefers-reduced-motion)
 
-**权限:**
-- 只展示`Public`勾选为true的行,勾选为false的行不出现在目录页里,也不生成可访问路由
+### FadeIn组件
+文件:components/FadeIn.tsx
+- 'use client'
+- whileInView,once:true
+- 初始:opacity 0,y 20
+- 结束:opacity 1,y 0
+- transition: duration 0.5, ease [0.25,0.1,0.25,1.0]
+- reduced motion:直接显示children不做位移
 
-**多语言翻译:**
-- 骨架阶段完全不实现,用户会在Notion里按需手动用Notion AI翻译功能生成多语言版本
-- ⚠️提醒:等C内容和框架都稳定后,记得回来专门讨论翻译功能怎么在网站上实现语言切换
+### WordReveal组件
+文件:components/WordReveal.tsx
+- 'use client'
+- 按空格split成词数组
+- 每词motion.span,delay=index×0.08s
+- 初始:opacity 0,y 12
+- transition: duration 0.4,ease easeOut
+- reduced motion:直接显示纯文字
 
-**读者评论区:**
-- 骨架阶段不做,列入C模块之后的独立功能,涉及新数据库(如Supabase)和审核逻辑(敏感词过滤),不在本次范围内
+### ScrollLit组件
+文件:components/ScrollLit.tsx
+- 'use client'
+- 按字符split
+- useScroll+useTransform
+- 默认opacity 0.2,随滚动进度点亮到1
+- reduced motion:全部opacity 1
 
-**骨架阶段要做的事:**
-- `lib/notion.ts`:封装读取3个数据库的函数,返回条目列表(标题/日期/public状态)和单条目正文
-- `/shelf` 路由:书架页,3本封面
-- `/shelf/[category]` 路由:目录页,列出该分类下`public=true`的条目,显示`序号 · 标题`
-- `/shelf/[category]/[id]` 路由:阅读页,显示标题、日期、正文
-- 封面上传UI组件框架搭好(先不接数据库,占位即可)
+### ProjectCard升级
+- motion.div替换最外层div
+- whileHover: scale 1.02,duration 0.25
+- hover:薄荷蓝边框1.5px
+- 卡片背景:#F5F1EC
+- tags标签:背景#BCE0DF,文字#2C4F4D,11px monospace
+- types/project.ts新增:tags?: string[],videoUrl?: string|null
+- 暂不实现视频播放
 
-### D. AI聊天助手 — 优先级:P1,未开始
-第一版只做GitHub查询(function calling),接口设计预留RAG扩展位。
+### About数字统计条
+文件:components/StatsCounter.tsx(新建)
+- 三栏:N projects(从projects.json动态读) / 3 blog categories / 2026
+- 数字:Fraunces,text-3xl
+- countUp动画:requestAnimationFrame,800ms
+- 区块上方0.5px薄荷蓝横线,三栏间0.5px薄荷蓝竖线
+- reduced motion:直接显示最终数字
 
-### E. 打赏 — 已规划待实现
-国际:Buy Me a Coffee / Ko-fi;国内:微信/支付宝赞赏码图片。导航栏常驻。
-
-### E. 商店 — P2暂不做
-以后跳转Gumroad/淘宝。
-
-## 代码规范
-- 组件放 `/components`,页面路由用App Router
-- 数据结构用TypeScript interface定义在 `/types`,模块间解耦
-- 提交信息用中文说明改了什么
-- **严格限定改动范围,不允许修改未明确要求的模块文件**
-
-## 待办(未决策项)
-- 域名DNS配置(等Vercel部署好后回填)
-- A/B模块的GitHub、LinkedIn真实链接待回填(用户自己做)
-- 翻译功能怎么在网站上实现(等C稳定后讨论)
-- 读者评论区功能(等C稳定后讨论)
+## 执行批次
+- Batch 1:全局换色+FadeIn+SiteHeader品牌文字
+- Batch 2:WordReveal+统计条+ProjectCard+ScrollLit
+- Batch 3:Support入口+Coming Soon弹窗+GA4
+- Batch 4:提交部署
