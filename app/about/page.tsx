@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import FadeIn from "@/components/FadeIn";
 import WordReveal from "@/components/WordReveal";
 import StatsCounter from "@/components/StatsCounter";
+import PoetryWave from "@/components/PoetryWave";
 
 export const metadata: Metadata = {
   title: "About / Ziran",
@@ -64,6 +65,8 @@ export default function AboutPage() {
 
         <StatsCounter />
       </main>
+
+      <PoetryWave />
     </div>
   );
 }

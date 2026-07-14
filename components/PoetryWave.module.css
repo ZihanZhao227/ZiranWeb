@@ -1,0 +1,21 @@
+.track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: floatUp 22s linear infinite;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(320px);
+  }
+  to {
+    transform: translateY(-480px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
