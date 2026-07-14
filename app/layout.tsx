@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Newsreader } from "next/font/google";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -30,6 +31,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${newsreader.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">{children}</body>
+      <GoogleAnalytics />
     </html>
   );
 }

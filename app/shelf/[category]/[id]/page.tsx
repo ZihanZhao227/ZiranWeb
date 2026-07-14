@@ -4,12 +4,19 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import ShelfContent from "@/components/shelf/ShelfContent";
 import ScrollLit from "@/components/ScrollLit";
+import SupportLink from "@/components/SupportLink";
 import { getEntries, getEntry } from "@/lib/notion";
 import { SHELF_CATEGORIES, type ShelfCategory } from "@/types/shelf";
 
 function isShelfCategory(value: string): value is ShelfCategory {
   return (SHELF_CATEGORIES as string[]).includes(value);
 }
+
+const SUPPORT_COPY: Record<ShelfCategory, string> = {
+  Everyday: "如果这篇 Everyday 帮到了你,请我喝一杯吧。",
+  Inedible: "这篇 Inedible 没把你毒到的话,请我喝一杯吧。",
+  Medley: "喜欢这篇 Medley 的话,请我喝一杯吧。",
+};
 
 export async function generateStaticParams() {
   const params = await Promise.all(
@@ -70,6 +77,18 @@ export default async function ShelfEntryPage({
         <ScrollLit text="慢读。" />
 
         <ShelfContent blocks={entry.content} />
+
+        <div className="flex flex-col items-start gap-4 border-t border-ink/10 pt-10">
+          <p className="font-body text-base text-ink/70">{SUPPORT_COPY[category]}</p>
+          <SupportLink
+            className="rounded-md bg-moss px-4 py-1.5 text-sm text-moss-dark transition-opacity hover:opacity-80"
+            extraParams={{
+              support_source: "article",
+              shelf_category: category,
+              article_id: entry.id,
+            }}
+          />
+        </div>
       </main>
     </div>
   );

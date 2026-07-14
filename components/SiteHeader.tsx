@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SupportLink from "@/components/SupportLink";
 
 export default function SiteHeader() {
   return (
@@ -25,6 +26,7 @@ export default function SiteHeader() {
         <Link href="/shelf" className="hover:text-moss transition-colors">
           书架
         </Link>
+        <SupportLink className="rounded-md bg-moss px-4 py-1.5 text-sm text-moss-dark transition-opacity hover:opacity-80" />
       </nav>
     </header>
   );
