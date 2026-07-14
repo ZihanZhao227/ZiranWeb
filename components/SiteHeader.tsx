@@ -18,13 +18,13 @@ export default function SiteHeader() {
       </Link>
       <nav className="flex gap-6 font-body text-base tracking-wide">
         <Link href="/about" className="hover:text-moss transition-colors">
-          关于我
+          About
         </Link>
         <Link href="/work" className="hover:text-moss transition-colors">
-          作品
+          Work
         </Link>
         <Link href="/shelf" className="hover:text-moss transition-colors">
-          书架
+          Shelf
         </Link>
         <SupportLink className="rounded-md bg-moss px-4 py-1.5 text-sm text-moss-dark transition-opacity hover:opacity-80" />
       </nav>

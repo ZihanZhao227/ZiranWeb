@@ -35,7 +35,7 @@ export default function SupportLink({
   return (
     <>
       <button type="button" onClick={handleClick} className={className}>
-        支持一下 ☕
+        Support🩵 
       </button>
       <SupportComingSoonModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>

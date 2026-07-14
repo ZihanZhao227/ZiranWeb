@@ -121,7 +121,7 @@ function pageToEntryMeta(
   return {
     id: page.id,
     category,
-    title: getTitle(page) || "未命名",
+    title: getTitle(page) || "Untitled",
     date: getDate(page),
   };
 }

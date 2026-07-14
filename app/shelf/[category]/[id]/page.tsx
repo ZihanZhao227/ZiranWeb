@@ -13,9 +13,9 @@ function isShelfCategory(value: string): value is ShelfCategory {
 }
 
 const SUPPORT_COPY: Record<ShelfCategory, string> = {
-  Everyday: "如果这篇 Everyday 帮到了你,请我喝一杯吧。",
-  Inedible: "这篇 Inedible 没把你毒到的话,请我喝一杯吧。",
-  Medley: "喜欢这篇 Medley 的话,请我喝一杯吧。",
+  Everyday: "If this Everyday post helped, buy me a coffee.",
+  Inedible: "If this Inedible post didn't poison you, buy me a coffee.",
+  Medley: "If you liked this Medley post, buy me a coffee.",
 };
 
 export async function generateStaticParams() {
@@ -74,7 +74,7 @@ export default async function ShelfEntryPage({
           )}
         </div>
 
-        <ScrollLit text="慢读。" />
+        <ScrollLit text="Read slowly." />
 
         <ShelfContent blocks={entry.content} />
 

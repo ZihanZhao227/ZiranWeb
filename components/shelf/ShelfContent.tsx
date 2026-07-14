@@ -34,7 +34,7 @@ function Heading({ level, text }: { level: 1 | 2 | 3; text: string }) {
 
 export default function ShelfContent({ blocks }: { blocks: ShelfContentBlock[] }) {
   if (blocks.length === 0) {
-    return <p className="font-body text-lg text-ink/50">这一条还没有正文内容。</p>;
+    return <p className="font-body text-lg text-ink/50">This entry has no content yet.</p>;
   }
 
   return (

@@ -55,7 +55,7 @@ export default async function ShelfCategoryPage({
 
         {entries.length === 0 ? (
           <p className="font-body text-base text-ink/50">
-            这里还是空的,稍后会有内容。
+            This shelf is empty for now. More is coming soon.
           </p>
         ) : (
           <ol className="flex flex-col divide-y divide-ink/10 border-t border-ink/10">

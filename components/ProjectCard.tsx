@@ -15,15 +15,16 @@ export default function ProjectCard({ project }: { project: Project }) {
     >
       {project.status === "in-progress" && (
         <div
-          aria-label="施工中"
+          aria-label="In Progress"
           className="absolute -right-12 top-5 flex w-44 flex-col gap-1 rotate-45 py-1.5 shadow-sm"
           style={{
             backgroundImage:
               "repeating-linear-gradient(45deg, #f5c518 0 10px, #141412 10px 20px)",
           }}
         >
-          <span className="bg-ink py-1 text-center font-heading text-sm font-bold tracking-[0.2em] text-[#f5c518]">
-            施工中
+          <span className="bg-ink py-1 text-center font-heading text-xs
+           font-bold tracking-[0.2em] text-[#f5c518]">
+            In Progress
           </span>
         </div>
       )}

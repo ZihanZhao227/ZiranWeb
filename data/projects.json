@@ -2,7 +2,7 @@
   {
     "id": "ziranweb",
     "title": "ZiranWeb",
-    "description": "个人网站本体,Next.js + Tailwind 搭建的入口分屏与内容页系统。",
+    "description": "The personal website itself, the entry split-screen and content page system built by Next.js Tailwind",
     "status": "in-progress",
     "githubUrl": "https://github.com/ZihanZhao227/ziranweb",
     "tags": ["Next.js", "TypeScript", "Tailwind CSS", "Notion API", "Framer Motion"],
@@ -19,8 +19,8 @@
   },
   {
     "id": "project-three",
-    "title": "占位项目三",
-    "description": "这里写一句话描述这个项目做了什么、解决了什么问题。",
+    "title": "project-three",
+    "description": "None",
     "status": "done",
     "githubUrl": "https://github.com/ZihanZhao227/project-three",
     "tags": ["React"],
@@ -28,11 +28,11 @@
   },
   {
     "id": "project-four",
-    "title": "占位项目四",
-    "description": "还在施工中的项目,先占个位置。",
+    "title": "project-four",
+    "description": "In Progress",
     "status": "in-progress",
     "githubUrl": "https://github.com/ZihanZhao227/project-four",
-    "tags": ["实验性"],
+    "tags": ["Python"],
     "videoUrl": null
   }
 ]
