@@ -6,5 +6,6 @@ export interface Project {
   description: string;
   status: ProjectStatus;
   githubUrl: string;
-  tags: string[];
+  tags?: string[];
+  videoUrl?: string | null;
 }

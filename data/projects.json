@@ -5,7 +5,8 @@
     "description": "个人网站本体,Next.js + Tailwind 搭建的入口分屏与内容页系统。",
     "status": "in-progress",
     "githubUrl": "https://github.com/ZihanZhao227/ziranweb",
-    "tags": ["Next.js", "TypeScript", "Tailwind"]
+    "tags": ["Next.js", "TypeScript", "Tailwind CSS", "Notion API", "Framer Motion"],
+    "videoUrl": null
   },
   {
     "id": "nature-diary",
@@ -13,7 +14,8 @@
     "description": "About Full-stack + distributed Nature Diary: Streamlit UI, FastAPI REST APIs, Postgres persistence, and Redis-backed async worker for CV-style processing (PENDING → PROCESSED). Built to be demoable, scalable, and extendable to real vision models and smart-glasses workflows.",
     "status": "done",
     "githubUrl": "https://github.com/ZihanZhao227/nature-diary",
-    "tags": ["Python"]
+    "tags": ["Python", "FastAPI", "Streamlit", "PostgreSQL", "Redis"],
+    "videoUrl": null
   },
   {
     "id": "project-three",
@@ -21,7 +23,8 @@
     "description": "这里写一句话描述这个项目做了什么、解决了什么问题。",
     "status": "done",
     "githubUrl": "https://github.com/ZihanZhao227/project-three",
-    "tags": ["React"]
+    "tags": ["React"],
+    "videoUrl": null
   },
   {
     "id": "project-four",
@@ -29,6 +32,7 @@
     "description": "还在施工中的项目,先占个位置。",
     "status": "in-progress",
     "githubUrl": "https://github.com/ZihanZhao227/project-four",
-    "tags": ["实验性"]
+    "tags": ["实验性"],
+    "videoUrl": null
   }
 ]

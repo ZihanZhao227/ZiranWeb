@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import ShelfContent from "@/components/shelf/ShelfContent";
+import ScrollLit from "@/components/ScrollLit";
 import { getEntries, getEntry } from "@/lib/notion";
 import { SHELF_CATEGORIES, type ShelfCategory } from "@/types/shelf";
 
@@ -65,6 +66,8 @@ export default async function ShelfEntryPage({
             <p className="font-body text-base italic text-ink/50">{entry.date}</p>
           )}
         </div>
+
+        <ScrollLit text="慢读。" />
 
         <ShelfContent blocks={entry.content} />
       </main>

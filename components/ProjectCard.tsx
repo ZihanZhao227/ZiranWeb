@@ -1,12 +1,17 @@
+"use client";
+
+import { motion } from "motion/react";
 import type { Project } from "@/types/project";
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
-    <a
+    <motion.a
       href={project.githubUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex flex-col gap-4 overflow-hidden border border-ink/10 p-6 transition-colors hover:border-moss"
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.25 }}
+      className="group relative flex flex-col gap-4 overflow-hidden border-[1.5px] border-ink/10 bg-[#F5F1EC] p-6 transition-colors hover:border-moss"
     >
       {project.status === "in-progress" && (
         <div
@@ -29,16 +34,19 @@ export default function ProjectCard({ project }: { project: Project }) {
       <p className="font-body text-base leading-relaxed text-ink/70">
         {project.description}
       </p>
-      <div className="mt-auto flex flex-wrap gap-2 pt-2">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="font-heading text-[11px] uppercase tracking-widest text-ink/50"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-    </a>
+      {project.tags && project.tags.length > 0 && (
+        <div className="mt-auto flex flex-wrap gap-2 pt-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-sm bg-moss px-2 py-0.5 text-moss-dark"
+              style={{ fontFamily: "monospace", fontSize: "11px" }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </motion.a>
   );
 }

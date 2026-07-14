@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import FadeIn from "@/components/FadeIn";
+import WordReveal from "@/components/WordReveal";
+import StatsCounter from "@/components/StatsCounter";
 
 export const metadata: Metadata = {
   title: "关于我 / Ziran",
@@ -18,9 +20,12 @@ export default function AboutPage() {
       <SiteHeader />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-16 px-6 py-16 md:px-0 md:py-24">
         <h1 className="font-heading text-5xl leading-[1.05] tracking-tight md:text-7xl">
-          你好,我是
+          <WordReveal text="你好,我是" />
           <br />
-          <span className="text-moss">Zihan</span>。
+          <span className="text-moss">
+            <WordReveal text="Zihan" />
+          </span>
+          。
         </h1>
 
         <FadeIn>
@@ -54,6 +59,8 @@ export default function AboutPage() {
             </a>
           ))}
         </div>
+
+        <StatsCounter />
       </main>
     </div>
   );
