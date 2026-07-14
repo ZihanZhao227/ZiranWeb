@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import CategoryCover from "@/components/shelf/CategoryCover";
 import FadeIn from "@/components/FadeIn";
+import LuoshenBanner from "@/components/LuoshenBanner";
 import { SHELF_CATEGORIES } from "@/types/shelf";
 
 export const metadata: Metadata = {
@@ -28,6 +29,8 @@ export default function ShelfPage() {
           ))}
         </div>
       </main>
+
+      <LuoshenBanner />
     </div>
   );
 }

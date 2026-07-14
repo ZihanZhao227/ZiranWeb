@@ -1,0 +1,19 @@
+.drift {
+  animation: driftBg 24s ease-in-out infinite;
+}
+
+@keyframes driftBg {
+  0%,
+  100% {
+    background-position: center 40%;
+  }
+  50% {
+    background-position: 55% 40%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    animation: none;
+  }
+}

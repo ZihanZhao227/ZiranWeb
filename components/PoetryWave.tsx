@@ -126,7 +126,7 @@ export default function PoetryWave() {
   return (
     <div className="flex flex-col">
       {/* 浮动诗句字幕 */}
-      <div className="relative overflow-hidden" style={{ height: 380, backgroundColor: "#F5F3EE" }}>
+      <div className="relative overflow-hidden" style={{ height: 380, backgroundColor: "#F7F6F2" }}>
         <div
           className={shouldReduceMotion ? undefined : styles.track}
           style={{
