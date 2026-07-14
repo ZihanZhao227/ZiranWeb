@@ -6,7 +6,7 @@ export default function LuoshenBanner() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ height: 800 }}>
+    <div className="relative w-full overflow-hidden" style={{ height: 600 }}>
       <motion.div
         animate={shouldReduceMotion ? undefined : { scale: [1, 1.015, 1] }}
         transition={{ duration: 8, ease: "easeInOut", repeat: Infinity }}
@@ -22,7 +22,7 @@ export default function LuoshenBanner() {
             : {
                 position: "absolute",
                 inset: "-20% 0",
-                height: "140%",
+                height: "120%",
                 backgroundImage: "url('/images/luoshen-scroll.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center 40%",
@@ -34,7 +34,7 @@ export default function LuoshenBanner() {
       <div
         className="pointer-events-none absolute inset-x-0 top-0"
         style={{
-          height: 150,
+          height: 130,
           zIndex: 2,
           background: "linear-gradient(to bottom, #F7F6F2, transparent)",
         }}
@@ -42,7 +42,7 @@ export default function LuoshenBanner() {
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0"
         style={{
-          height: 200,
+          height: 130,
           zIndex: 2,
           background: "linear-gradient(to top, #F7F6F2, transparent)",
         }}
