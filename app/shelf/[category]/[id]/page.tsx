@@ -7,6 +7,7 @@ import ScrollLit from "@/components/ScrollLit";
 import SupportLink from "@/components/SupportLink";
 import { getEntries, getEntry } from "@/lib/notion";
 import { SHELF_CATEGORIES, type ShelfCategory } from "@/types/shelf";
+import { redirect } from 'next/navigation';
 
 function isShelfCategory(value: string): value is ShelfCategory {
   return (SHELF_CATEGORIES as string[]).includes(value);
@@ -45,9 +46,10 @@ export default async function ShelfEntryPage({
   params: Promise<{ category: string; id: string }>;
 }) {
   const { category, id } = await params;
-  if (!isShelfCategory(category)) {
-    notFound();
-  }
+  const matched = SHELF_CATEGORIES.find(c => c.toLowerCase() === category.toLowerCase());
+  if (!matched) notFound();
+  if (matched !== category) redirect(`/shelf/${matched}/${id}`);
+  const safeCategory = matched;
 
   const entry = await getEntry(category, id);
   if (!entry) {

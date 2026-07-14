@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import { getEntries } from "@/lib/notion";
 import { SHELF_CATEGORIES, type ShelfCategory } from "@/types/shelf";
+import { redirect } from 'next/navigation';
 
 function isShelfCategory(value: string): value is ShelfCategory {
   return (SHELF_CATEGORIES as string[]).includes(value);
@@ -32,9 +33,9 @@ export default async function ShelfCategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
-  if (!isShelfCategory(category)) {
-    notFound();
-  }
+  const matched = SHELF_CATEGORIES.find(c => c.toLowerCase() === category.toLowerCase());
+  if (!matched) notFound();
+  if (matched !== category) redirect(`/shelf/${matched}`);
 
   const entries = await getEntries(category);
 
