@@ -3,27 +3,21 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
+
 const EN_PARAGRAPHS = [
-  "Before Purdue, I took a gap year in Shanghai.",
-  "The first internship was at Fred & Farid, an ad agency.",
-  "The first was at Fred & Farid, an ad agency. ",
-  "It taught me that intern salaries in Shanghai advertising stopped updating around 2012,",
-  "and that I very much want to eat actual meals. Higher technical barriers seemed like the solution.",
-  "The second was at China Literature (Yue Wen), editing web novels — yes, including a lot of harem fiction. ",
-  "What I learned: there's an audience for everything.",
-  "People just need exposure. Maybe that applies to me too."
-  
+  "Before Purdue, I took a gap year in Shanghai and did two internships that had nothing to do with CS.",
+  "The first was at Fred & Farid, an ad agency. I learned that Shanghai advertising interns get paid like it's still 2012, and that I would very much like to eat real food. Hence: CS.",
+  "The second was at China Literature (Tencent), editing web novels — yes, including a lot of harem fiction. Turns out there's an audience for everything. People just need a chance to find it.",
+  "Maybe that applies to me too."
 ];
 
 const ZH_PARAGRAPHS = [
-  "来普渡之前,我在上海gap了一年。",
-  "第一份在FF广告公司做AE。上海广告行业实习生的工资停留在十年前,让我意识到吃饱饭需要更高的技术壁垒。",
-
-  "第二份在阅文集团做男频小说编辑Intern。",
-  "本人在此期间阅读了各类流行种类的小说（包含海量大量后宫文）。",
-  "这让我意识到：这世界上什么都有人喜欢,缺少的或许只是一个曝光的机会。",
-  "或许我也是"
+  "来普渡之前,我在上海gap了一年,做了两份跟CS完全没关系的实习。",
+  "第一份在FF广告公司做AE。感悟总结：啊，上海广告行业实习生工资，居然还停留在2012年！虽然工作体验不错，但一个月1800块钱饭都要不够吃，好想要满满的大工资，适量劳动换取金钱，狠狠装入本人口袋！遂转码",
+  "第二份在阅文集团做男频小说编辑练习生,主要工作是阅读各类网文（含大量后宫文）。读完之后我的核心收获是:任何事物都可以在这大千世界找到属于自己的受众呀,可能缺的只是一个被看到的机会，增加一下曝光效应。",
+  "或许我也是，遂建立此网站！"
 ];
+
 
 export default function StoryToggle() {
   const [showChinese, setShowChinese] = useState(false);
