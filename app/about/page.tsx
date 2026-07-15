@@ -5,7 +5,7 @@ import StatsCounter from "@/components/StatsCounter";
 import PoetryWave from "@/components/PoetryWave";
 import StoryToggle from "@/components/StoryToggle";
 import photoStripStyles from "./photo-strip.module.css";
-import ExperienceIcon from "@/components/ExperienceIcon";
+import ExperienceList from "@/components/ExperienceList";
 
 export const metadata: Metadata = {
   title: "About / Ziran",
@@ -26,6 +26,11 @@ const EXPERIENCE = [
     org: "The Data Mine, Purdue University",
     role: "Undergraduate Researcher · NLP pipelines, 119k+ records",
     time: "Jan – May 2026",
+    detail: [
+      "Built end-to-end Python data pipelines that processed over 119,000 records from heterogeneous sources,resolving schema conflicts to produce clean, model- ready datasets at scale.",
+      "Designed automated data validation and label leakage prevention checks for feature pipelines that caught mapping conflicts and duplicate records before model training began.",
+      "Trained and benchmarked Random Forest, SVM, and gradient boosting models on high-dimensionalfeature sets, then applied feature importance analysis to prune low signal inputs and guide pipeline design decisions."
+    ]
   },
   {
     iconSrc: "/photos/logo-yuewen.png",
@@ -33,8 +38,15 @@ const EXPERIENCE = [
     iconBg: "#FFF7ED",
     iconColor: "#C2410C",
     org: "China Literature/Yue Wen · Tencent (https://www.yuewen.com/en)",
+    link: "https://www.yuewen.com/en",
     role: "Editorial Intern · Web novel editorial",
     time: "Nov 2022 – Mar 2023",
+    detail: [
+      "Processed and evaluated 100+ works weekly using structured quality rubrics, maintaining a content scoringpipeline.",
+      "Analyzed performance metrics across WebNovel's overseas catalog to surface high-signal titles.",
+      "Reviewed and edited web novel manuscripts. Wrote content summaries across multiple genres.",
+      "Synthesized ranking patterns to inform acquisition strategy and author coaching — combining data analysi swith editorial judgment."
+    ]
   },
   {
     iconSrc: "/photos/logo-ff.png",
@@ -42,8 +54,15 @@ const EXPERIENCE = [
     iconBg: "#F5F0EB",
     iconColor: "#5C4A32",
     org: "Fred & Farid Shanghai (https://fredfarid.com/)",
+    link: "https://fredfarid.com/",
     role: "Account Executive Intern · Client services",
     time: "Jul – Nov 2022",
+    detail: [
+      "Owned end-to-end KOL content review pipeline for HP Gaming across 50+ influencers.",
+      "Built weekly engagement tracking workflows (Weibo Inspirations, Engagements, follower growth).",
+      "Coordinated between clients and creative teams. ",
+      "Delivered 3.24M impressions and 50K followers in 3 months through data-informed content iteration."
+    ]
   },
 ];
 
@@ -122,28 +141,7 @@ export default function AboutPage() {
           {/* 2. EXPERIENCE */}
           <div className="flex flex-col">
             <SectionLabel>EXPERIENCE</SectionLabel>
-            <div className="flex flex-col">
-              {EXPERIENCE.map((item) => (
-                <div
-                  key={item.org}
-                  className="grid grid-cols-[52px_1fr_auto] items-center gap-3.5 border-b-[0.5px] border-ink/[0.07] py-3.5 first:border-t-[0.5px]"
-                >
-                  <ExperienceIcon
-                    src={item.iconSrc}
-                    fallback={item.iconFallback}
-                    bg={item.iconBg}
-                    color={item.iconColor}
-                  />
-                  <div className="flex flex-col gap-1">
-                    <p className="font-heading text-sm font-medium">{item.org}</p>
-                    <p className="text-xs" style={{ color: "#999999" }}>{item.role}</p>
-                  </div>
-                  <p style={{ fontFamily: "monospace", fontSize: "11px", color: "#BBBAB5" }}>
-                    {item.time}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <ExperienceList experiences={EXPERIENCE} />
           </div>
 
           <SectionDivider />
@@ -189,7 +187,7 @@ export default function AboutPage() {
             <SectionLabel>BEYOND WORK</SectionLabel>
             <p className="mb-6 font-body text-base leading-relaxed text-ink/70">
               I bake when I need to think. I travel when I can. Every Halloween I take the
-              costume a little too seriously. I write things I'm not sure how to categorize — which is also why the Shelf exists.
+              costume a little too seriously. I write things I&apos;m not sure how to categorize — which is also why the Shelf exists.
             </p>
             <div className="flex flex-wrap gap-2">
               {BEYOND_PHOTOS.map((photo) => (
