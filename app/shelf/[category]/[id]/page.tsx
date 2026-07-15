@@ -78,7 +78,7 @@ export default async function ShelfEntryPage({
 
         <ScrollLit text="Read slowly." />
 
-        <ShelfContent blocks={entry.content} />
+        <ShelfContent blocks={entry.content} dropCap />
 
         <div className="flex flex-col items-start gap-4 border-t border-ink/10 pt-10">
           <p className="font-body text-base text-ink/70">{SUPPORT_COPY[category]}</p>

@@ -21,12 +21,16 @@ export default function ShelfPage() {
           <p className="font-body text-lg italic text-ink/50">Shelf</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
-          {SHELF_CATEGORIES.map((category, index) => (
-            <FadeIn key={category} delay={index * 0.1}>
-              <CategoryCover category={category} />
-            </FadeIn>
-          ))}
+        <div
+          className="relative overflow-hidden rounded-lg bg-[#BCE0DF] px-8 pb-0 pt-6 before:absolute before:inset-x-0 before:top-0 before:h-3 before:bg-[#D8EFEE] before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-3.5 after:bg-[#8BBFB8] after:content-['']"
+        >
+          <div className="flex flex-wrap items-end justify-center gap-3 pb-0">
+            {SHELF_CATEGORIES.map((category, index) => (
+              <FadeIn key={category} delay={index * 0.1}>
+                  <CategoryCover category={category} />
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </main>
 

@@ -32,14 +32,28 @@ function Heading({ level, text }: { level: 1 | 2 | 3; text: string }) {
   return <h4 className="font-heading text-xl tracking-tight">{text}</h4>;
 }
 
-export default function ShelfContent({ blocks }: { blocks: ShelfContentBlock[] }) {
+const DROP_CAP_CLASS =
+  "motion-safe:first-letter:float-left motion-safe:first-letter:mr-1 motion-safe:first-letter:mt-0.5 motion-safe:first-letter:font-heading motion-safe:first-letter:text-[3.5em] motion-safe:first-letter:leading-[0.8] motion-safe:first-letter:text-moss-dark";
+
+export default function ShelfContent({
+  blocks,
+  dropCap = false,
+}: {
+  blocks: ShelfContentBlock[];
+  dropCap?: boolean;
+}) {
   if (blocks.length === 0) {
     return <p className="font-body text-lg text-ink/50">This entry has no content yet.</p>;
   }
 
+  const grouped = groupBlocks(blocks);
+  const dropCapIndex = dropCap
+    ? grouped.findIndex((block) => block.type === "paragraph" && block.text)
+    : -1;
+
   return (
     <div className="flex flex-col gap-6 font-body text-lg leading-relaxed text-ink/80">
-      {groupBlocks(blocks).map((block, index) => {
+      {grouped.map((block, index) => {
         switch (block.type) {
           case "bulleted-group":
             return (
@@ -59,8 +73,15 @@ export default function ShelfContent({ blocks }: { blocks: ShelfContentBlock[] }
             );
           case "heading":
             return <Heading key={index} level={block.level} text={block.text} />;
-          case "paragraph":
-            return block.text ? <p key={index}>{block.text}</p> : null;
+          case "paragraph": {
+            if (!block.text) return null;
+            const applyDropCap = index === dropCapIndex;
+            return (
+              <p key={index} className={applyDropCap ? DROP_CAP_CLASS : undefined}>
+                {block.text}
+              </p>
+            );
+          }
           case "quote":
             return (
               <blockquote key={index} className="border-l-2 border-moss pl-4 italic text-ink/70">

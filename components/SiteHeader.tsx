@@ -26,6 +26,9 @@ export default function SiteHeader() {
         <Link href="/shelf" className="hover:text-moss transition-colors">
           Shelf
         </Link>
+        <Link href="/studio" className="hover:text-moss transition-colors">
+          Studio
+        </Link>
         <SupportLink className="rounded-md bg-moss px-4 py-1.5 text-sm text-moss-dark transition-opacity hover:opacity-80" />
       </nav>
     </header>
