@@ -160,7 +160,7 @@ export default function AboutPage() {
           <div className="flex flex-col">
             <SectionLabel>EXPERIENCE MOMENTS</SectionLabel>
             <div className={`flex items-center gap-3 overflow-x-auto py-5 ${photoStripStyles.scrollHide}`}>
-              {MOMENTS.map((photo) => (›
+              {MOMENTS.map((photo) => (
                 <div
                   key={photo.src}
                   className="group relative flex-shrink-0"
