@@ -16,6 +16,23 @@ const LINKS = [
   { label: "GitHub", value: "https://github.com/ZihanZhao227", href: "https://github.com/ZihanZhao227" },
   { label: "LinkedIn", value: "https://www.linkedin.com/in/hannah-zhao-711769232", href: "https://www.linkedin.com/in/hannah-zhao-711769232/" },
 ];
+const EDUCATION = [
+  {
+    iconSrc: "/photos/logo-datamine.png",
+    iconFallback: "PU",
+    iconBg: "#EEF2FF",
+    iconColor: "#3730A3",
+    org: "Purdue University, College of Science",
+    link: "https://www.purdue.edu/",
+    role: "B.S. Artificial Intelligence + B.S. Computer Science (Machine Intelligence Track)",
+    time: "Aug 2023 – May 2026",
+    detail: [
+      "Relevant Coursework: Natural Language Processing, Data Mining & Machine Learning, Artificial Intelligence, Analysis of Algorithms, Relational Database Systems, Computer Architecture",
+      "Additional: Business Analytics & Information Management, Mitch Daniels School of Business",
+      "Dean's List & Semester Honors: Aug 2023 – Aug 2024"
+    ],
+  },
+];
 
 const EXPERIENCE = [
   {
@@ -139,13 +156,23 @@ export default function AboutPage() {
 
           <SectionDivider />
 
+
+          {/* Education */}
+          <div className="flex flex-col">
+            <SectionLabel>EDUCATION</SectionLabel>
+            <ExperienceList experiences={EDUCATION} />
+          </div>
+          <SectionDivider />
+
+
           {/* 2. EXPERIENCE */}
           <div className="flex flex-col">
             <SectionLabel>EXPERIENCE</SectionLabel>
             <ExperienceList experiences={EXPERIENCE} />
           </div>
-
           <SectionDivider />
+
+          
 
           {/* 3. About Those Experience */}
           <div className="flex flex-col">
