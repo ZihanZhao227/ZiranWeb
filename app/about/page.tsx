@@ -24,6 +24,7 @@ const EXPERIENCE = [
     iconBg: "#EEF2FF",
     iconColor: "#3730A3",
     org: "The Data Mine, Purdue University",
+    link: "https://datamine.purdue.edu/",
     role: "Undergraduate Researcher · NLP pipelines, 119k+ records",
     time: "Jan – May 2026",
     detail: [
@@ -175,7 +176,7 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-            <p className="mt-2 text-center text-moss" style={{ fontFamily: "monospace", fontSize: "9px" }}>
+            <p className="mt-2 text-center text-moss font-medium" style={{ fontFamily: "monospace", fontSize: "9px" }}>
               ← scroll →
             </p>
           </div>
