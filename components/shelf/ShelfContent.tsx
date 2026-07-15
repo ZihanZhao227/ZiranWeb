@@ -22,14 +22,41 @@ function groupBlocks(blocks: ShelfContentBlock[]): (ShelfContentBlock | ListGrou
   return groups;
 }
 
-function Heading({ level, text }: { level: 1 | 2 | 3; text: string }) {
+function Heading({ id, level, text }: { id: string; level: 1 | 2 | 3; text: string }) {
   if (level === 1) {
-    return <h2 className="font-heading text-3xl tracking-tight">{text}</h2>;
+    return (
+      <h2 id={id} className="font-heading text-3xl tracking-tight">
+        {text}
+      </h2>
+    );
   }
   if (level === 2) {
-    return <h3 className="font-heading text-2xl tracking-tight">{text}</h3>;
+    return (
+      <h3 id={id} className="font-heading text-2xl tracking-tight">
+        {text}
+      </h3>
+    );
   }
-  return <h4 className="font-heading text-xl tracking-tight">{text}</h4>;
+  return (
+    <h4 id={id} className="font-heading text-xl tracking-tight">
+      {text}
+    </h4>
+  );
+}
+
+// 和 app/shelf/[category]/[id]/page.tsx 里的同名函数保持逐字节一致——
+// 两边各自遍历同一批 heading 文本、各自维护一份 seen 计数器,
+// 只有算法完全相同,目录里生成的 id 才能对上这里渲染出来的 DOM id。
+function slugify(text: string, seen: Map<string, number>): string {
+  const base =
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\p{L}\p{N}]+/gu, "-")
+      .replace(/^-+|-+$/g, "") || "section";
+  const count = seen.get(base) ?? 0;
+  seen.set(base, count + 1);
+  return count === 0 ? base : `${base}-${count + 1}`;
 }
 
 const DROP_CAP_CLASS =
@@ -50,6 +77,7 @@ export default function ShelfContent({
   const dropCapIndex = dropCap
     ? grouped.findIndex((block) => block.type === "paragraph" && block.text)
     : -1;
+  const headingSeen = new Map<string, number>();
 
   return (
     <div className="flex flex-col gap-6 font-body text-lg leading-relaxed text-ink/80">
@@ -71,8 +99,10 @@ export default function ShelfContent({
                 ))}
               </ol>
             );
-          case "heading":
-            return <Heading key={index} level={block.level} text={block.text} />;
+          case "heading": {
+            const headingId = slugify(block.text, headingSeen);
+            return <Heading key={index} id={headingId} level={block.level} text={block.text} />;
+          }
           case "paragraph": {
             if (!block.text) return null;
             const applyDropCap = index === dropCapIndex;

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import ShelfContent from "@/components/shelf/ShelfContent";
+import TableOfContents, { type TocHeading } from "@/components/shelf/TableOfContents";
 import ScrollLit from "@/components/ScrollLit";
 import SupportLink from "@/components/SupportLink";
 import { getEntries, getEntry } from "@/lib/notion";
@@ -11,6 +12,21 @@ import { redirect } from 'next/navigation';
 
 function isShelfCategory(value: string): value is ShelfCategory {
   return (SHELF_CATEGORIES as string[]).includes(value);
+}
+
+// 和 components/shelf/ShelfContent.tsx 里的同名函数保持逐字节一致——
+// 两边各自遍历同一批 heading 文本、各自维护一份 seen 计数器,
+// 只有算法完全相同,这里生成的目录 id 才能对上正文里渲染出来的 DOM id。
+function slugify(text: string, seen: Map<string, number>): string {
+  const base =
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\p{L}\p{N}]+/gu, "-")
+      .replace(/^-+|-+$/g, "") || "section";
+  const count = seen.get(base) ?? 0;
+  seen.set(base, count + 1);
+  return count === 0 ? base : `${base}-${count + 1}`;
 }
 
 const SUPPORT_COPY: Record<ShelfCategory, string> = {
@@ -56,9 +72,19 @@ export default async function ShelfEntryPage({
     notFound();
   }
 
+  const headingSeen = new Map<string, number>();
+  const headings: TocHeading[] = entry.content
+    .filter((block) => block.type === "heading")
+    .map((block) => ({
+      id: slugify(block.text, headingSeen),
+      text: block.text,
+      level: block.level,
+    }));
+
   return (
     <div className="flex min-h-dvh flex-col">
       <SiteHeader />
+      <TableOfContents headings={headings} />
       <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-10 px-6 py-16 md:px-0 md:py-24">
         <Link
           href={`/shelf/${category}`}
