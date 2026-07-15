@@ -6,13 +6,23 @@ import { AnimatePresence, motion } from "motion/react";
 const EN_PARAGRAPHS = [
   "Before Purdue, I took a gap year in Shanghai.",
   "The first internship was at Fred & Farid, an ad agency.",
-  "The second was at China Literature, editing web novels.",
+  "The first was at Fred & Farid, an ad agency. ",
+  "It taught me that intern salaries in Shanghai advertising stopped updating around 2012,",
+  "and that I very much want to eat actual meals. Higher technical barriers seemed like the solution.",
+  "The second was at China Literature (Yue Wen), editing web novels — yes, including a lot of harem fiction. ",
+  "What I learned: there's an audience for everything.",
+  "People just need exposure. Maybe that applies to me too."
+  
 ];
 
 const ZH_PARAGRAPHS = [
-  "来普渡之前,我在上海晃悠了一年。",
-  "第一份在FF广告公司做AE。",
-  "第二份在阅文集团编网文。",
+  "来普渡之前,我在上海gap了一年。",
+  "第一份在FF广告公司做AE。上海广告行业实习生的工资停留在十年前,让我意识到吃饱饭需要更高的技术壁垒。",
+
+  "第二份在阅文集团做男频小说编辑Intern。",
+  "本人在此期间阅读了各类流行种类的小说（包含海量大量后宫文）。",
+  "这让我意识到：这世界上什么都有人喜欢,缺少的或许只是一个曝光的机会。",
+  "或许我也是"
 ];
 
 export default function StoryToggle() {

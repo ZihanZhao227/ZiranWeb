@@ -32,7 +32,7 @@ const EXPERIENCE = [
     iconFallback: "阅",
     iconBg: "#FFF7ED",
     iconColor: "#C2410C",
-    org: "China Literature · Tencent (阅文集团)",
+    org: "China Literature/Yue Wen · Tencent (https://www.yuewen.com/en)",
     role: "Editorial Intern · Web novel editorial",
     time: "Nov 2022 – Mar 2023",
   },
@@ -41,7 +41,7 @@ const EXPERIENCE = [
     iconFallback: "FF",
     iconBg: "#F5F0EB",
     iconColor: "#5C4A32",
-    org: "Fred & Farid Shanghai",
+    org: "Fred & Farid Shanghai (https://fredfarid.com/)",
     role: "Account Executive Intern · Client services",
     time: "Jul – Nov 2022",
   },
@@ -189,7 +189,7 @@ export default function AboutPage() {
             <SectionLabel>BEYOND WORK</SectionLabel>
             <p className="mb-6 font-body text-base leading-relaxed text-ink/70">
               I bake when I need to think. I travel when I can. Every Halloween I take the
-              costume a little too seriously.
+              costume a little too seriously. I write things I'm not sure how to categorize — which is also why the Shelf exists.
             </p>
             <div className="flex flex-wrap gap-2">
               {BEYOND_PHOTOS.map((photo) => (
