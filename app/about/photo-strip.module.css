@@ -1,0 +1,7 @@
+.scrollHide {
+  scrollbar-width: none;
+}
+
+.scrollHide::-webkit-scrollbar {
+  display: none;
+}
