@@ -9,12 +9,17 @@ export interface ShelfEntryMeta {
   date: string | null;
 }
 
+export interface RichTextSegment {
+  text: string;
+  color?: string;
+}
+
 export type ShelfContentBlock =
-  | { type: "paragraph"; text: string }
-  | { type: "heading"; level: 1 | 2 | 3; text: string }
-  | { type: "bulleted"; text: string }
-  | { type: "numbered"; text: string }
-  | { type: "quote"; text: string }
+  | { type: "paragraph"; text: RichTextSegment[] }
+  | { type: "heading"; level: 1 | 2 | 3; text: RichTextSegment[] }
+  | { type: "bulleted"; text: RichTextSegment[] }
+  | { type: "numbered"; text: RichTextSegment[] }
+  | { type: "quote"; text: RichTextSegment[] }
   | { type: "code"; text: string; language: string }
   | { type: "divider" }
   | { type: "image"; src: string; caption: string };

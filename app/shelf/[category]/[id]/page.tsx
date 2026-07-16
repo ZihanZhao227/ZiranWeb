@@ -7,11 +7,23 @@ import TableOfContents, { type TocHeading } from "@/components/shelf/TableOfCont
 import ScrollLit from "@/components/ScrollLit";
 import SupportLink from "@/components/SupportLink";
 import { getEntries, getEntry } from "@/lib/notion";
-import { SHELF_CATEGORIES, type ShelfCategory } from "@/types/shelf";
+import {
+  SHELF_CATEGORIES,
+  type RichTextSegment,
+  type ShelfCategory,
+  type ShelfContentBlock,
+} from "@/types/shelf";
 import { redirect } from 'next/navigation';
 
 function isShelfCategory(value: string): value is ShelfCategory {
   return (SHELF_CATEGORIES as string[]).includes(value);
+}
+
+// text 字段现在是 RichTextSegment[](保留了颜色标注),目录只需要纯文本,
+// 所以这里把各段拼回一个字符串——等价于 richTextToPlain() 的效果,
+// 但作用对象是我们自己的 RichTextSegment[],不是 Notion 原始的 rich_text。
+function segmentsToPlainText(segments: RichTextSegment[]): string {
+  return segments.map((segment) => segment.text).join("");
 }
 
 // 和 components/shelf/ShelfContent.tsx 里的同名函数保持逐字节一致——
@@ -74,12 +86,18 @@ export default async function ShelfEntryPage({
 
   const headingSeen = new Map<string, number>();
   const headings: TocHeading[] = entry.content
-    .filter((block) => block.type === "heading")
-    .map((block) => ({
-      id: slugify(block.text, headingSeen),
-      text: block.text,
-      level: block.level,
-    }));
+    .filter(
+      (block): block is Extract<ShelfContentBlock, { type: "heading" }> =>
+        block.type === "heading",
+    )
+    .map((block) => {
+      const text = segmentsToPlainText(block.text);
+      return {
+        id: slugify(text, headingSeen),
+        text,
+        level: block.level,
+      };
+    });
 
   return (
     <div className="flex min-h-dvh flex-col">

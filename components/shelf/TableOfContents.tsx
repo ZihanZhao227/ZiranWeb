@@ -35,7 +35,22 @@ export default function TableOfContents({ headings }: { headings: TocHeading[] }
 
     elements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect();
+    // 短文章可能没有足够的可滚动距离,让最后一个 heading 进入上面
+    // rootMargin 定义的"活跃区间"——滚到底时兜底高亮最后一个 heading。
+    function handleScroll() {
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom) {
+        setActiveId(headings[headings.length - 1].id);
+      }
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [headings]);
 
   if (headings.length === 0) return null;

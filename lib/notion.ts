@@ -5,6 +5,7 @@ import type {
   RichTextItemResponse,
 } from "@notionhq/client";
 import type {
+  RichTextSegment,
   ShelfCategory,
   ShelfContentBlock,
   ShelfEntry,
@@ -155,26 +156,38 @@ export async function getEntries(
   return pages.map((page) => pageToEntryMeta(page, category));
 }
 
+// 只用于纯文本场景(比如 heading 生成 slug/id),不保留颜色标注。
 function richTextToPlain(richText: RichTextItemResponse[]): string {
   return richText.map((t) => t.plain_text).join("");
+}
+
+// 保留每一段 rich_text 的颜色标注,渲染正文用这个而不是 richTextToPlain。
+function richTextToSegments(richText: RichTextItemResponse[]): RichTextSegment[] {
+  return richText.map((t) => {
+    const color = t.annotations.color;
+    if (!color || color === "default") {
+      return { text: t.plain_text };
+    }
+    return { text: t.plain_text, color };
+  });
 }
 
 function blockToContentBlock(block: BlockObjectResponse): ShelfContentBlock | null {
   switch (block.type) {
     case "paragraph":
-      return { type: "paragraph", text: richTextToPlain(block.paragraph.rich_text) };
+      return { type: "paragraph", text: richTextToSegments(block.paragraph.rich_text) };
     case "heading_1":
-      return { type: "heading", level: 1, text: richTextToPlain(block.heading_1.rich_text) };
+      return { type: "heading", level: 1, text: richTextToSegments(block.heading_1.rich_text) };
     case "heading_2":
-      return { type: "heading", level: 2, text: richTextToPlain(block.heading_2.rich_text) };
+      return { type: "heading", level: 2, text: richTextToSegments(block.heading_2.rich_text) };
     case "heading_3":
-      return { type: "heading", level: 3, text: richTextToPlain(block.heading_3.rich_text) };
+      return { type: "heading", level: 3, text: richTextToSegments(block.heading_3.rich_text) };
     case "bulleted_list_item":
-      return { type: "bulleted", text: richTextToPlain(block.bulleted_list_item.rich_text) };
+      return { type: "bulleted", text: richTextToSegments(block.bulleted_list_item.rich_text) };
     case "numbered_list_item":
-      return { type: "numbered", text: richTextToPlain(block.numbered_list_item.rich_text) };
+      return { type: "numbered", text: richTextToSegments(block.numbered_list_item.rich_text) };
     case "quote":
-      return { type: "quote", text: richTextToPlain(block.quote.rich_text) };
+      return { type: "quote", text: richTextToSegments(block.quote.rich_text) };
     case "code":
       return {
         type: "code",

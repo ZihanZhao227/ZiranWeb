@@ -1,6 +1,6 @@
-import type { ShelfContentBlock } from "@/types/shelf";
+import type { RichTextSegment, ShelfContentBlock } from "@/types/shelf";
 
-type ListGroup = { type: "bulleted-group" | "numbered-group"; items: string[] };
+type ListGroup = { type: "bulleted-group" | "numbered-group"; items: RichTextSegment[][] };
 
 function groupBlocks(blocks: ShelfContentBlock[]): (ShelfContentBlock | ListGroup)[] {
   const groups: (ShelfContentBlock | ListGroup)[] = [];
@@ -22,31 +22,10 @@ function groupBlocks(blocks: ShelfContentBlock[]): (ShelfContentBlock | ListGrou
   return groups;
 }
 
-function Heading({ id, level, text }: { id: string; level: 1 | 2 | 3; text: string }) {
-  if (level === 1) {
-    return (
-      <h2 id={id} className="font-heading text-3xl tracking-tight">
-        {text}
-      </h2>
-    );
-  }
-  if (level === 2) {
-    return (
-      <h3 id={id} className="font-heading text-2xl tracking-tight">
-        {text}
-      </h3>
-    );
-  }
-  return (
-    <h4 id={id} className="font-heading text-xl tracking-tight">
-      {text}
-    </h4>
-  );
+function segmentsToPlainText(segments: RichTextSegment[]): string {
+  return segments.map((segment) => segment.text).join("");
 }
 
-// 和 app/shelf/[category]/[id]/page.tsx 里的同名函数保持逐字节一致——
-// 两边各自遍历同一批 heading 文本、各自维护一份 seen 计数器,
-// 只有算法完全相同,目录里生成的 id 才能对上这里渲染出来的 DOM id。
 function slugify(text: string, seen: Map<string, number>): string {
   const base =
     text
@@ -57,6 +36,86 @@ function slugify(text: string, seen: Map<string, number>): string {
   const count = seen.get(base) ?? 0;
   seen.set(base, count + 1);
   return count === 0 ? base : `${base}-${count + 1}`;
+}
+
+const TEXT_COLORS: Record<string, string> = {
+  red: "#E24B4A",
+  orange: "#D97706",
+  yellow: "#B45309",
+  green: "#3D7370",
+  blue: "#2563EB",
+  purple: "#7C3AED",
+  pink: "#DB2777",
+  brown: "#92400E",
+  gray: "#6B7280",
+};
+
+const BACKGROUND_COLORS: Record<string, string> = {
+  red_background: "#FEE2E2",
+  blue_background: "#DBEAFE",
+  green_background: "#D1FAE5",
+  yellow_background: "#FEF3C7",
+  purple_background: "#EDE9FE",
+  pink_background: "#FCE7F3",
+};
+
+function RichText({ segments }: { segments: RichTextSegment[] }) {
+  return (
+    <>
+      {segments.map((segment, index) => {
+        if (!segment.text) return null;
+        if (segment.color && segment.color in BACKGROUND_COLORS) {
+          return (
+            <mark
+              key={index}
+              className="rounded-sm px-0.5"
+              style={{ backgroundColor: BACKGROUND_COLORS[segment.color], color: "inherit" }}
+            >
+              {segment.text}
+            </mark>
+          );
+        }
+        if (segment.color && segment.color in TEXT_COLORS) {
+          return (
+            <span key={index} style={{ color: TEXT_COLORS[segment.color] }}>
+              {segment.text}
+            </span>
+          );
+        }
+        return <span key={index}>{segment.text}</span>;
+      })}
+    </>
+  );
+}
+
+function Heading({
+  level,
+  segments,
+  id,
+}: {
+  level: 1 | 2 | 3;
+  segments: RichTextSegment[];
+  id: string;
+}) {
+  if (level === 1) {
+    return (
+      <h2 id={id} className="font-heading text-3xl tracking-tight">
+        <RichText segments={segments} />
+      </h2>
+    );
+  }
+  if (level === 2) {
+    return (
+      <h3 id={id} className="font-heading text-2xl tracking-tight">
+        <RichText segments={segments} />
+      </h3>
+    );
+  }
+  return (
+    <h4 id={id} className="font-heading text-xl tracking-tight">
+      <RichText segments={segments} />
+    </h4>
+  );
 }
 
 const DROP_CAP_CLASS =
@@ -75,7 +134,7 @@ export default function ShelfContent({
 
   const grouped = groupBlocks(blocks);
   const dropCapIndex = dropCap
-    ? grouped.findIndex((block) => block.type === "paragraph" && block.text)
+    ? grouped.findIndex((block) => block.type === "paragraph" && segmentsToPlainText(block.text))
     : -1;
   const headingSeen = new Map<string, number>();
 
@@ -86,36 +145,40 @@ export default function ShelfContent({
           case "bulleted-group":
             return (
               <ul key={index} className="list-disc space-y-2 pl-6">
-                {block.items.map((item, itemIndex) => (
-                  <li key={itemIndex}>{item}</li>
+                {block.items.map((segments, itemIndex) => (
+                  <li key={itemIndex}>
+                    <RichText segments={segments} />
+                  </li>
                 ))}
               </ul>
             );
           case "numbered-group":
             return (
               <ol key={index} className="list-decimal space-y-2 pl-6">
-                {block.items.map((item, itemIndex) => (
-                  <li key={itemIndex}>{item}</li>
+                {block.items.map((segments, itemIndex) => (
+                  <li key={itemIndex}>
+                    <RichText segments={segments} />
+                  </li>
                 ))}
               </ol>
             );
           case "heading": {
-            const headingId = slugify(block.text, headingSeen);
-            return <Heading key={index} id={headingId} level={block.level} text={block.text} />;
+            const headingId = slugify(segmentsToPlainText(block.text), headingSeen);
+            return <Heading key={index} id={headingId} level={block.level} segments={block.text} />;
           }
           case "paragraph": {
-            if (!block.text) return null;
+            if (!segmentsToPlainText(block.text)) return null;
             const applyDropCap = index === dropCapIndex;
             return (
               <p key={index} className={applyDropCap ? DROP_CAP_CLASS : undefined}>
-                {block.text}
+                <RichText segments={block.text} />
               </p>
             );
           }
           case "quote":
             return (
               <blockquote key={index} className="border-l-2 border-moss pl-4 italic text-ink/70">
-                {block.text}
+                <RichText segments={block.text} />
               </blockquote>
             );
           case "code":
